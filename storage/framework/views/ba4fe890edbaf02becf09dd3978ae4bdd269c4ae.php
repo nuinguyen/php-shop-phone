@@ -61,12 +61,12 @@
                         <input name="productid_hidden" type="hidden"  value="<?php echo e($product[0]->product_id); ?>" />
                     </span>
                 </div>
-                <form action="<?php echo e(url('/cart')); ?>">
+
                     <?php echo csrf_field(); ?>
-                    <button  class="btn btn-primary btn-sm add-cart " data-id_product="<?php echo e($product[0]->product_id); ?>" name="add-to-cart">Mua ngay</button>
-                </form>
+                    <button  class="btn btn-primary btn-sm add-cart buy-product-cart " data-id_product="<?php echo e($product[0]->product_id); ?>" name="add-to-cart">Mua ngay</button>
+
                     <?php echo csrf_field(); ?>
-                <button  class="btn btn-primary btn-sm add-cart" data-id_product="<?php echo e($product[0]->product_id); ?>" name="add-cart"><i class="fa fa-shopping-cart"></i> Them Gio Hnag</button>
+                <button  class="btn btn-primary btn-sm add-cart add-product-cart " data-id_product="<?php echo e($product[0]->product_id); ?>" name="add-cart"><i class="fa fa-shopping-cart"></i> Them Gio Hnag</button>
 
                 <p><b>Tinh trang:</b> Con hang</p>
                 <p><b>Dieu kien:</b> Moi 100</p>

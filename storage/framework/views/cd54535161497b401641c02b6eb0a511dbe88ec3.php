@@ -105,6 +105,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li><a href="<?php echo e(URL::to('/classify')); ?>">Them phan loai</a></li>
                             <li><a href="<?php echo e(URL::to('/product')); ?>">Them San pham</a></li>
                             <li><a href="<?php echo e(URL::to('/all-product')); ?>">Liet Ke san pham</a></li>
+                            <li><a href="<?php echo e(URL::to('/news')); ?>">Liet ke tin tuc</a></li>
 
                         </ul>
                     </li>

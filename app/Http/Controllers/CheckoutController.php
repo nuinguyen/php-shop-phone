@@ -260,13 +260,11 @@ if($data['matp'] && $data['maqh'] && $data['xaid']){
             ->join('tbl_cart','tbl_cart.cart_id','=','tbl_cart_detail.cart_id')
             ->join('tbl_classify','tbl_classify.classify_id','=','tbl_cart_detail.classify_id')
             ->where('tbl_cart.user_id',Auth::user()->id)
-            ->whereIn('tbl_product.product_id', $data['product'])->get();
+            ->whereIn('tbl_product.product_id', $data['product'])
+            ->get();
         $category=Category::orderby('category_id','asc')->get();
         //BANNER
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
-
-
-
 
         return view ('pages.checkout.show_checkout')->with(compact('category','city','show','all_banner','feeship'));
     }

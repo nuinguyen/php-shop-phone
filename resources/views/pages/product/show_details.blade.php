@@ -63,12 +63,12 @@
                         <input name="productid_hidden" type="hidden"  value="{{$product[0]->product_id}}" />
                     </span>
                 </div>
-                <form action="{{url('/cart')}}">
+{{--                <form action="{{url('/cart')}}">--}}
                     @csrf
-                    <button  class="btn btn-primary btn-sm add-cart " data-id_product="{{$product[0]->product_id}}" name="add-to-cart">Mua ngay</button>
-                </form>
+                    <button  class="btn btn-primary btn-sm add-cart buy-product-cart " data-id_product="{{$product[0]->product_id}}" name="add-to-cart">Mua ngay</button>
+{{--                </form>--}}
                     @csrf
-                <button  class="btn btn-primary btn-sm add-cart" data-id_product="{{$product[0]->product_id}}" name="add-cart"><i class="fa fa-shopping-cart"></i> Them Gio Hnag</button>
+                <button  class="btn btn-primary btn-sm add-cart add-product-cart " data-id_product="{{$product[0]->product_id}}" name="add-cart"><i class="fa fa-shopping-cart"></i> Them Gio Hnag</button>
 
                 <p><b>Tinh trang:</b> Con hang</p>
                 <p><b>Dieu kien:</b> Moi 100</p>

@@ -71,6 +71,14 @@ Route::get('/edit-category/{category_id}','CategoryController@edit_category');
 Route::get('/delete-category/{category_id}','CategoryController@delete_category');
 Route::post('/update-category/{category_id}','CategoryController@update_category');
 
+// Category
+
+Route::get('/news','NewsController@news');
+Route::post('/save-news','NewsController@save_news');
+Route::get('/edit-news/{news_id}','NewsController@edit_news');
+Route::get('/delete-producer/{producer_id}','ProducerController@delete_producer');
+Route::post('/update-news/{news_id}','NewsController@update_news');
+
 // Classify
 
 Route::get('/classify','ClassifyController@classify');

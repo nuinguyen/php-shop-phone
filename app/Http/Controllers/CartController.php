@@ -141,7 +141,7 @@ class CartController extends Controller
     public function cart(){
 //        Session::put('message',Auth::user()->id);
         ///CATEGORY
-        $show=CartDetail::join('tbl_product','tbl_cart_detail.product_id','=','tbl_product.product_id')
+        $show=CartDetail::orderBy('cart_detail_id','DESC')->join('tbl_product','tbl_cart_detail.product_id','=','tbl_product.product_id')
             ->join('tbl_cart','tbl_cart.cart_id','=','tbl_cart_detail.cart_id')
             ->join('tbl_classify','tbl_classify.classify_id','=','tbl_cart_detail.classify_id')
             ->where('tbl_cart.user_id',Auth::user()->id)->get();

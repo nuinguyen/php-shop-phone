@@ -177,16 +177,15 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="{{URL::to('/trang-chu')}}" class="active">Home</a></li>
+
                             <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="shop.html">Products</a></li>
-                                    <li><a href="product-details.html">Product Details</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="{{URL::to('/show-cart')}}">Cart</a></li>
-                                    <li><a href="login.html">Login</a></li>
+                                    @foreach($category as $key => $cate)
+                                        <li><a href="{{URL::to('/danh-muc/'.$cate->category_id)}}">{{$cate->category_name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                            <li class="dropdown"><a href="#">Tin tuc<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
@@ -602,6 +601,7 @@
 
 
 
+
 <script type="text/javascript">
     $(document).ready(function(){
         load_gallery();
@@ -614,7 +614,7 @@
                         sum += parseInt(itemValue.children('.cart_price').children('.to_price').attr('value')) * parseInt(itemValue.children('.cart_amount').children('#amount').attr('value'));
                     });
                     $('#total').html('Tổng tiền hàng : ' + (sum +'').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + ' VNĐ' );
-                    $('#order').html('<input type="submit" value="DAT HANG" name="send_order" class="btn btn-success">');
+                    $('#order').html('<input type="button" value="DAT HANG" name="send_order" class="btn btn-success buy-order-cart">');
                 } else {
                     sum = 0;
                     $('#total').html('Tổng tiền hàng : ' + (sum +'').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + ' VNĐ' );
@@ -681,6 +681,27 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('.buy-order-cart').click(function(){
+            // var content_search = $('.content_search').val();
+            var _token = $('input[name="_token"]').val();
+            alert('hello');
+            // alert("district");
+            // alert(village);
+            // alert(fee_ship);
+            $.ajax({
+                url : '{{url('/search')}}',
+                method: 'POST',
+                data:{content_search:content_search,  _token:_token},
+                success:function(){
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -740,7 +761,32 @@
 
 <script>
     $(document).ready(function(){
-        $('.add-cart').click(function(){
+        $('.buy-product-cart').click(function(){
+            var id = $(this).data('id_product');
+            var amount = $('.amount').val();
+            var _token = $('input[name="_token"]').val();
+            // alert(amount);
+            if(classify_name){
+                $.ajax({
+                    url: '{{url('/save-cart')}}',
+                    method: 'POST',
+                    data:{id:id,classify_name:classify_name,amount:amount,_token:_token},
+                    success:function(data){
+                        alert("Đã thêm vào giỏ hàng");
+                        //location.reload(data);
+                        window.location="http://localhost/shopsupper/cart";
+                    }
+                });
+            }else{
+                alert("Vui long chon phan loai san pham");
+            }
+        });
+    });
+
+</script>
+<script>
+    $(document).ready(function(){
+        $('.add-product-cart').click(function(){
             var id = $(this).data('id_product');
             var amount = $('.amount').val();
             var _token = $('input[name="_token"]').val();
@@ -762,7 +808,6 @@
     });
 
 </script>
-
 <script type="text/javascript">
 
 

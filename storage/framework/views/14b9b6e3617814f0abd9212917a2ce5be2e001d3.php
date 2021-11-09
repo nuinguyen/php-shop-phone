@@ -1,5 +1,6 @@
 <?php $__env->startSection('content'); ?>
-    <form method="post" action="<?php echo e(url('/check-out')); ?>">
+    <form>
+
         <?php echo csrf_field(); ?>
     <section id="cart_items">
         <div class="containerr">
@@ -42,7 +43,6 @@
                                 <input type="checkbox" class="product"  value="<?php echo e($value->product_id); ?>" name="product[]" >
                             </td>
                             <td class="cart_description" >
-
                                 <p><img src="<?php echo e(URL::to('public/uploads/product/'.$value->product_image)); ?>" width="90" alt="" /></p>
                             </td>
                             <td>

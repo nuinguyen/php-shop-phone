@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
-    <form method="post" action="{{url('/check-out')}}">
+    <form>
+{{--    <form method="post" action="{{url('/check-out')}}">--}}
         @csrf
     <section id="cart_items">
         <div class="containerr">
@@ -43,7 +44,6 @@
                                 <input type="checkbox" class="product"  value="{{$value->product_id}}" name="product[]" >
                             </td>
                             <td class="cart_description" >
-
                                 <p><img src="{{URL::to('public/uploads/product/'.$value->product_image)}}" width="90" alt="" /></p>
                             </td>
                             <td>
