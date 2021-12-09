@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class NewsController extends Controller
 {
+
     public function news(){
         $news=News::orderby('news_id',"ASC")->get();
         return view('admin.news.news')->with(compact('news'));

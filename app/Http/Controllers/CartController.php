@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Session;
@@ -147,8 +148,10 @@ class CartController extends Controller
             ->where('tbl_cart.user_id',Auth::user()->id)->get();
         $category=Category::orderby('category_id','asc')->get();
         //BANNER
+        $news=News::where('news_status','1')->orderby('news_id','desc')->get();
+
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
-        return view('pages.cart.show_cart')->with(compact('category','show','all_banner'));
+        return view('pages.cart.show_cart')->with(compact('category','show','all_banner','news'));
     }
 
     public function delete_to_cart($pro_id){

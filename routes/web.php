@@ -71,10 +71,22 @@ Route::get('/edit-category/{category_id}','CategoryController@edit_category');
 Route::get('/delete-category/{category_id}','CategoryController@delete_category');
 Route::post('/update-category/{category_id}','CategoryController@update_category');
 
-// Category
+// News
 
 Route::get('/news','NewsController@news');
 Route::post('/save-news','NewsController@save_news');
+Route::get('/edit-news/{news_id}','NewsController@edit_news');
+Route::get('/delete-producer/{producer_id}','ProducerController@delete_producer');
+Route::post('/update-news/{news_id}','NewsController@update_news');
+
+// News-Detail
+
+Route::get('/tin-tuc/{news_id}','NewsDetailController@show_news');
+Route::get('/chi-tiet-tin-tuc/{news_detail_id}','NewsDetailController@show_news_detail');
+
+Route::get('/news-detail','NewsDetailController@news_detail');
+Route::post('/save-news-detail','NewsDetailController@save_news_detail');
+Route::get('/all-news-detail','NewsDetailController@all_news_detail');
 Route::get('/edit-news/{news_id}','NewsController@edit_news');
 Route::get('/delete-producer/{producer_id}','ProducerController@delete_producer');
 Route::post('/update-news/{news_id}','NewsController@update_news');

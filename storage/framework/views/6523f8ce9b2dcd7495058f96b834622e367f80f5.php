@@ -188,8 +188,9 @@
                             </li>
                             <li class="dropdown"><a href="#">Tin tuc<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
+                                    <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $all_news): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li><a href="<?php echo e(URL::to('/tin-tuc/'.$all_news->news_id)); ?>"><?php echo e($all_news->news_name); ?></a></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </li>
                             <li><a href="404.html">404</a></li>

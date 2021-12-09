@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\News;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
@@ -25,6 +26,7 @@ class HomeController extends Controller
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
         $category=Category::where('category_status','1')->orderby('category_id','asc')->get();
         $product=Product::where('product_status','1')->orderby('product_id','desc')->get();
-        return view('pages.home')->with(compact('category','product','all_banner'));
+        $news=News::where('news_status','1')->orderby('news_id','desc')->get();
+        return view('pages.home')->with(compact('category','product','all_banner','news'));
     }
 }

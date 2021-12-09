@@ -187,8 +187,9 @@
                             </li>
                             <li class="dropdown"><a href="#">Tin tuc<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
+                                    @foreach($news as $key => $all_news)
+                                        <li><a href="{{URL::to('/tin-tuc/'.$all_news->news_id)}}">{{$all_news->news_name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li><a href="404.html">404</a></li>
