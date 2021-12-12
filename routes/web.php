@@ -155,6 +155,10 @@ Route::post('/delete-export/{export_id}','ExportController@delete_export');
 
 Route::post('/update-producer/{export_id}','ExportController@update_producer');
 
+// WareHouse
+
+Route::get('/warehouse','WarehouseController@warehouse');
+
 
 
 
