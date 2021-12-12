@@ -151,6 +151,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
+                            <span>Quản lý kho</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/import')}}">Thêm đơn nhạp hàng</a></li>
+                            <li><a href="{{URL::to('/all-import')}}">Danh sách đơn nhập hàng</a></li>
+                            <li><a href="{{URL::to('/export')}}">Thêm đơn xuat hàng</a></li>
+                            <li><a href="{{URL::to('/all-export')}}">Danh sách đơn xuat hàng</a></li>
+                            <li><a href="{{URL::to('/warehouse')}}">trich xuat Kho</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>Ma Giam gia</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{URL::to('/sale')}}">Quan ly ma giam gia</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
                             <span>Ma Giam gia</span>
                         </a>
                         <ul class="sub">
@@ -210,6 +232,76 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+<script type="text/javascript">
+
+    $(document).ready(function(){
+            $('select[name="import_product[]"]').on('change', function(){
+                arr = $("select[name='import_product[]'] option:selected");
+                html = '';
+                var o=1;
+                for (let i = 0; i < arr.length; i++) {
+                    html += '<tr>';
+                    html += '<td>' + o++ + '</td>';
+                    html += '<td>' + arr.eq(i).html() + '</td>';
+                    html += '<td><input type="text" data-type="currency" name="price[]" class="form-control import_price text-right"></td>';
+                    html += '<td><input type="number"  min="1" value="1" name="amount[]" class="form-control text-right" ></td>';
+                    html += '<td class="total text-right"></td>';
+                    html += '</tr>';
+                }
+                $('.list_product').html(html);
+                // totalPrice += parseInt($('.transport').val().replace(/\,/g, ''));
+                // alert(totalPrice);
+                // $('.sumAll').html((totalPrice + ""));
+                changeTotal();
+            });
+    })
+    if($('.price_import' ).val()){
+        price = $('.price_import' ).val();
+        total = parseInt(price) * parseInt($(this).parent().next().find('input[name="amount[]"]').val());
+        $(this).parent().next().next().html((total + ""));
+        updateTotal();
+
+    }
+
+    function changeTotal() {
+        $('input[name="price[]"]').on('change', function() {
+             price = $(this).val().replace(/\,/g, '');
+             total = parseInt(price) * parseInt($(this).parent().next().find('input[name="amount[]"]').val());
+             $(this).parent().next().next().html((total + ""));
+             updateTotal();
+
+        });
+        $('input[name="amount[]"]').on('change', function() {
+             price = $(this).parent().prev().find('input[name="price[]"]').val().replace(/\,/g, '') || 0;
+             total = parseInt(price) * parseInt($(this).val());
+            $(this).parent().next().html((total + ""));
+             updateTotal();
+
+            // alert(price)
+        });
+    }
+    $('.transport').on('change', function() {
+        sumTotal = parseInt($('.transport').val().replace(/\,/g, '')) + parseInt($('.totalPrice').html().replace(/\,/g, ''));
+        $('.sumAll').html((sumTotal + ""));
+    });
+    function updateTotal() {
+        arramount = $('input[name="amount[]"');
+        arrtotal = $('.total');
+        sumTotal = 0;
+        sumAmount = 0;
+        for (let i = 0; i < arrtotal.length; i++) {
+            el = arrtotal.eq(i).html().replace(/\,/g, '');
+            sumTotal += parseInt(el);
+            el = arramount.eq(i).val().replace(/\,/g, '') || 0;
+            sumAmount += parseInt(el);
+        }
+        $('.totalPrice').html((sumTotal + "")+'&nbsp');
+        $('.totalAmount').html(sumAmount+'&nbsp');
+        sumTotal += parseInt($('.transport').val().replace(/\,/g, ''));
+        $('.sumAll').html((sumTotal + "")+'&nbsp');
+
+    }
+</script>
 
 <script type="text/javascript">
     $(document).ready(function(){

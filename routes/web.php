@@ -129,6 +129,35 @@ Route::post('/update-category/{category_id}','ProductController@update_category'
 
 Route::post('/quickview','ProductController@quickview');
 
+//Import
+
+Route::get('/import','ImportController@import');
+Route::post('/save-import','ImportController@save_import');
+Route::get('/all-import','ImportController@all_import');
+
+
+Route::get('/add-import/{import_id}','ImportController@add_import');
+Route::get('/show-import/{import_id}','ImportController@show_import');
+Route::post('/delete-import/{import_id}','ImportController@delete_import');
+
+Route::post('/update-producer/{producer_id}','ProducerController@update_producer');
+
+
+//Ẽport
+
+Route::get('/export','ExportController@export');
+Route::post('/save-export','ExportController@save_export');
+Route::get('/all-export','ExportController@all_export');
+
+Route::get('/add-export/{export_id}','ExportController@add_export');
+Route::get('/show-export/{export_id}','ExportController@show_export');
+Route::post('/delete-export/{export_id}','ExportController@delete_export');
+
+Route::post('/update-producer/{export_id}','ExportController@update_producer');
+
+
+
+
 // albums
 
 Route::post('select-gallery','ProductController@select_gallery');

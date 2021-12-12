@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Session;
@@ -192,8 +193,9 @@ class ProductController extends Controller
         $related=Product::where('product_status','1')->join('tbl_category','tbl_category.category_id','=','tbl_product.category_id')
             ->where('tbl_category.category_id',$category_id)
             ->whereNotIn('product_id',[$product_id])->paginate(3);
+        $news=News::orderby('news_id',"ASC")->get();
 
-        return view('pages.product.show_details')->with(compact('category','product','related','albums','all_banner'));
+        return view('pages.product.show_details')->with(compact('category','product','related','albums','all_banner','news'));
     }
 
     public function quickview(Request $request){

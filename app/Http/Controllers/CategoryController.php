@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\News;
 use Illuminate\Http\Request;
 use Session;
 use App\Category;
@@ -66,8 +67,9 @@ class CategoryController extends Controller
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
 
 
+        $news=News::orderby('news_id',"ASC")->get();
 
         $product=Product::where('product_status','1')->where('category_id',$category_id)->get();
-        return view('pages.category.show_category')->with(compact('category','product','category_name','all_banner'));
+        return view('pages.category.show_category')->with(compact('category','product','category_name','all_banner','news'));
     }
 }
