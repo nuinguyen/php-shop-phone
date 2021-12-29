@@ -74,7 +74,6 @@
                                     <?php else: ?>
                                         An
                                     <?php endif; ?>
-
                                 </td>
 
                                 <td>

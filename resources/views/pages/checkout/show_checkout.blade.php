@@ -179,9 +179,9 @@
                                         </p>
                                         <p>
                                         <div id="ship_fee">
-                                            <p> Phí vận chuyển là: {{number_format($feeship->ship_feeship,0,',','.').' '.'VNĐ'}} </p>
-                                            <p style="color: red"> Tổng Thanh toán là: {{number_format(($tong=$total+$feeship->ship_feeship),0,',','.').' '.'VNĐ'}} </p>
-                                            <input type="hidden" name="order_ship" class="order_ship" value="{{$feeship->ship_feeship}}">
+                                            <p> Phí vận chuyển là: {{number_format($ship_feeship,0,',','.').' '.'VNĐ'}} </p>
+                                            <p style="color: red"> Tổng Thanh toán là: {{number_format(($tong=$total+$ship_feeship),0,',','.').' '.'VNĐ'}} </p>
+                                            <input type="hidden" name="order_ship" class="order_ship" value="{{$ship_feeship}}">
                                             <input type="hidden" name="order_total" class="order_total" value="{{$tong}}">
                                         </div>
                                         </p>

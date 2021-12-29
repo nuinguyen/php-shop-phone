@@ -70,9 +70,9 @@
                     @csrf
                 <button  class="btn btn-primary btn-sm add-cart add-product-cart " data-id_product="{{$product[0]->product_id}}" name="add-cart"><i class="fa fa-shopping-cart"></i> Them Gio Hnag</button>
 
-                <p><b>Tinh trang:</b> Con hang</p>
-                <p><b>Dieu kien:</b> Moi 100</p>
-                <p><b>Danh muc:</b>{{$product[0]->category_name}} </p>
+                <p><b>So luong :</b> {{$warehouse->sum_inventory}}</p>
+                <p><b>Dieu kien :</b> Moi 100</p>
+                <p><b>Danh muc :</b>{{$product[0]->category_name}} </p>
                 <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
             </div><!--/product-information-->
         </div>

@@ -53,6 +53,7 @@
                         <th>So luong Xuat</th>
                         <th>So luong dang ve</th>
                         <th>So luong dang giao</th>
+                        <th>thao tác</th>
 
                     </tr>
                     </thead>
@@ -62,7 +63,13 @@
                             <td>{{$item->product_id}}</td>
 {{--                            <td><img src="public/uploads/product/{{ $pro->product_image }}" height="100" width="100"></td>--}}
                             <td>{{ $item->product_name }}</td>
-
+                            <td>{{ $item->product_name }}</td>
+                            <td>{{ $item->sum_inventory }}</td>
+                            <td>{{ $item->sum_import }}</td>
+                            <td>{{ $item->sum_export }}</td>
+{{--                            <td>{{ $import[5]->import_detail_amount }}</td>--}}
+                            <td>{{ isset($import[$item->product_id])?$import[$item->product_id]:0 }}</td>
+                            <td>{{ isset($export[$item->product_id])?$export[$item->product_id]:0 }}</td>
                             <td>
 {{--                                <a href="{{URL::to('/edit-product/'.$pro->product_id)}}" class="active styling-edit" ui-toggle-class="">--}}
                                     <i class="fa fa-pencil-square-o text-success text-active"></i></a>

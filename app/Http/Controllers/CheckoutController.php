@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\News;
 use App\Product;
 use App\Sale;
 use App\Ship;
@@ -56,10 +57,7 @@ class CheckoutController extends Controller
         $receiver->receiver_note = $data['receiver_note'];
         $receiver->save();
         $receiver_id = $receiver->receiver_id;
-
-
 //        $checkout_code = substr(md5(microtime()),rand(0,26),5);
-
 
         $order = new Order;
         $order->user_id = Auth::user()->id;
@@ -72,7 +70,6 @@ class CheckoutController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $order->created_at = now();
         $order->save();
-        $order_id=$order->order_id;
 
             foreach( $cartDetail as $key => $cart){
                 $order_detail = new OrderDetail();
@@ -83,22 +80,20 @@ class CheckoutController extends Controller
                 $order_detail->order_detail_amount = $cart['cart_detail_amount'];
                 $order_detail->save();
             }
-
         return Redirect::to('/');
-
     }
+
 
     public function calculate_fee(Request $request){
         $data = $request->all();
-if($data['matp'] && $data['maqh'] && $data['xaid']){
-    $feeship = Ship::where('city_id',$data['matp'])->where('district_id',$data['maqh'])->where('village_id',$data['xaid'])->first();
+        if($data['matp'] && $data['maqh'] && $data['xaid']){
+        $feeship = Ship::where('city_id',$data['matp'])->where('district_id',$data['maqh'])->where('village_id',$data['xaid'])->first();
 
-}else{
-    $address=User::where('id',Auth::user()->id)->first();
-    list($address_team,$address_village,$address_district,$address_city)=explode("-",$address->address);
-    $feeship = Ship::where('city_name',$address_city)->where('district_id',$address_district)->where('village_id',$address_village)->first();
-
-}
+        }else{
+        $address=User::where('id',Auth::user()->id)->first();
+        list($address_team,$address_village,$address_district,$address_city)=explode("-",$address->address);
+        $feeship = Ship::where('city_name',$address_city)->where('district_id',$address_district)->where('village_id',$address_village)->first();
+        }
         if($feeship){
             $output = '';
             $all_total=($feeship->ship_feeship+$data['order_total']);
@@ -121,28 +116,85 @@ if($data['matp'] && $data['maqh'] && $data['xaid']){
         }
 //        Session::put('total',$all_total);
         echo $output;
-
-//        <p> '. Session::put('ship',$feeship->ship_feeship).' </p>
-//        <p> '. Session::put('ship',25000).' </p>
-
-
-
     }
+
+
+    public function select_ship_home(Request $request){
+        $data = $request->all();
+        if($data['action']){
+            $output = '';
+            if($data['action']=="city"){
+                $select_district = District::where('city_id',$data['ma_id'])->orderby('district_id','ASC')->get();
+                $output.='<option>---Chọn quận huyện---</option>';
+                foreach($select_district as $key => $district){
+                    $output.='<option value="'.$district->district_id.'">'.$district->district_name.'</option>';
+                }
+            }else{
+
+                $select_village = Village::where('district_id',$data['ma_id'])->orderby('village_id','ASC')->get();
+                $output.='<option>---Chọn xã phường---</option>';
+                foreach($select_village as $key => $village){
+                    $output.='<option value="'.$village->village_id.'">'.$village->village_name.'</option>';
+                }
+            }
+            echo $output;
+        }
+    }
+
+    public function check_out(Request $request){
+        $data=$request->all();
+        $address=User::where('id',Auth::user()->id)->first();
+        list($address_team,$address_village,$address_district,$address_city)=explode("-",$address->address);
+        $city_id=City::where('city_name',$address_city)->first();
+        $district=District::where('district_name',$address_district)->first();
+        $village=Village::where('village_name',$address_village)->first();
+        $feeship = Ship::where('city_id',$city_id->city_id)->where('district_id',$district->district_id)->where('village_id',$village->village_id)->first();
+        if($feeship==null){
+            $ship_feeship=25000;
+        }else{
+            $ship_feeship=$feeship->ship_feeship;
+        }
+        //CATEGORY
+        $city = City::orderby('city_id','ASC')->get();
+        $show=CartDetail::join('tbl_product','tbl_cart_detail.product_id','=','tbl_product.product_id')
+            ->join('tbl_cart','tbl_cart.cart_id','=','tbl_cart_detail.cart_id')
+            ->join('tbl_classify','tbl_classify.classify_id','=','tbl_cart_detail.classify_id')
+            ->where('tbl_cart.user_id',Auth::user()->id)
+            ->whereIn('tbl_product.product_id', $data['product'])
+            ->get();
+        $category=Category::orderby('category_id','asc')->get();
+        //BANNER
+        $all_banner = Banner::orderBy('banner_id','DESC')->get();
+        //NEWS
+        $news=News::orderby('news_id',"ASC")->get();
+
+        //dd($ship_feeship);
+
+
+        return view ('pages.checkout.show_checkout')->with(compact('category','city','show','all_banner','ship_feeship','news'));
+    }
+
+
+
+
+
+
+
 
     public function calculate_sale(Request $request){
         $data = $request->all();
         $sale = Sale::where('sale_code',$data['sale_code'])->first();
 //        if($sale){
-                        $output = '';
-                        $output .= '
+        $output = '';
+        $output .= '
 			 <p> Ma Giam Gia la: '.number_format($sale->sale_number,0,',','.').' '.'VNĐ'.' </p>
 				';
-                        $cou[] = array(
-                            'sale_code' => $sale->sale_code,
-                            'sale_condition' => $sale->sale_condition,
-                            'sale_number' => $sale->sale_number,
-                        );
-                        Session::put('sale',$cou);
+        $cou[] = array(
+            'sale_code' => $sale->sale_code,
+            'sale_condition' => $sale->sale_condition,
+            'sale_number' => $sale->sale_number,
+        );
+        Session::put('sale',$cou);
 //                    }
 //                Session::save();
 //                Session::put('message','Thêm mã giảm giá thành công');
@@ -153,22 +205,9 @@ if($data['matp'] && $data['maqh'] && $data['xaid']){
         echo $output;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function clculate_sale(Request $request){
         $data = $request->all();
-            $sale = Sale::where('sale_code',$data['sale_code'])->first();
+        $sale = Sale::where('sale_code',$data['sale_code'])->first();
         if($sale){
             $count_coupon = $sale->count();
             if($count_coupon>0){
@@ -222,50 +261,9 @@ if($data['matp'] && $data['maqh'] && $data['xaid']){
         }
     }
 
-    public function select_ship_home(Request $request){
-        $data = $request->all();
-        if($data['action']){
-            $output = '';
-            if($data['action']=="city"){
-                $select_district = District::where('city_id',$data['ma_id'])->orderby('district_id','ASC')->get();
-                $output.='<option>---Chọn quận huyện---</option>';
-                foreach($select_district as $key => $district){
-                    $output.='<option value="'.$district->district_id.'">'.$district->district_name.'</option>';
-                }
 
-            }else{
 
-                $select_village = Village::where('district_id',$data['ma_id'])->orderby('village_id','ASC')->get();
-                $output.='<option>---Chọn xã phường---</option>';
-                foreach($select_village as $key => $village){
-                    $output.='<option value="'.$village->village_id.'">'.$village->village_name.'</option>';
-                }
-            }
-            echo $output;
-        }
 
-    }
-    public function check_out(Request $request){
-        $data=$request->all();
-        $address=User::where('id',Auth::user()->id)->first();
-        list($address_team,$address_village,$address_district,$address_city)=explode("-",$address->address);
-        $city_id=City::where('city_name',$address_city)->first();
-        $district=District::where('district_name',$address_district)->first();
-        $village=Village::where('village_name',$address_village)->first();
-        $feeship = Ship::where('city_id',$city_id->city_id)->where('district_id',$district->district_id)->where('village_id',$village->village_id)->first();
 
-        //CATEGORY
-        $city = City::orderby('city_id','ASC')->get();
-        $show=CartDetail::join('tbl_product','tbl_cart_detail.product_id','=','tbl_product.product_id')
-            ->join('tbl_cart','tbl_cart.cart_id','=','tbl_cart_detail.cart_id')
-            ->join('tbl_classify','tbl_classify.classify_id','=','tbl_cart_detail.classify_id')
-            ->where('tbl_cart.user_id',Auth::user()->id)
-            ->whereIn('tbl_product.product_id', $data['product'])
-            ->get();
-        $category=Category::orderby('category_id','asc')->get();
-        //BANNER
-        $all_banner = Banner::orderBy('banner_id','DESC')->get();
 
-        return view ('pages.checkout.show_checkout')->with(compact('category','city','show','all_banner','feeship'));
-    }
 }

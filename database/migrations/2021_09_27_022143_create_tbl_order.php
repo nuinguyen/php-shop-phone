@@ -17,10 +17,11 @@ class CreateTblOrder extends Migration
             $table->increments('order_id');
             $table->double('order_total');
             $table->integer('order_ship');
-            $table->integer('order_sale');
+            $table->string('order_sale');
             $table->integer('order_method');
             $table->bigInteger('user_id');
             $table->integer('receiver_id');
+            $table->integer('order_status');
             $table->timestamps();
         });
     }

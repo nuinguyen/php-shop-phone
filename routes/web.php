@@ -50,6 +50,13 @@ Route::get('/view-order','OrderController@view_order');
 Route::get('/order-detail/{order_id}','OrderController@order_detail');
 Route::post('/status-order','OrderController@status_order');
 
+// REPORT
+
+Route::get('/report-sell','ReportController@report_sell');
+Route::get('/report-import','ReportController@report_import');
+
+
+
 // BANNER
 Route::get('/banner','BannerController@banner');
 Route::post('/add-banner','BannerController@add_banner');

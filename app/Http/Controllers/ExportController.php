@@ -8,6 +8,8 @@ use App\Imports\ExportProduct;
 use App\Product;
 use DB;
 use Auth;
+use App\Warehouse;
+
 use Illuminate\Http\Request;
 
 class ExportController extends Controller
@@ -62,6 +64,14 @@ class ExportController extends Controller
         $export->export_status=1;
         $export->export_date=date('Y-m-d H:i:s', time());
         $export->save();
+        $export_detail=ExportDetail::where('export_detail_id',$export_id)->get();
+        foreach ($export_detail as $key => $value){
+            $warehouse=Warehouse::where('product_id',$export_detail[$key]->product_id)->first();
+            $warehouse->warehouse_sum_export=$warehouse->warehouse_sum_export+$export_detail[$key]->export_detail_amount;
+            $warehouse->warehouse_sum_inventory=$warehouse->warehouse_sum_inventory-$export_detail[$key]->export_detail_amount;
+            $warehouse->save();
+
+        }
         return redirect('/all-export');
     }
     public function delete_export($export_id){

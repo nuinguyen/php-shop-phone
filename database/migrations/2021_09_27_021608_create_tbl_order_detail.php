@@ -17,6 +17,7 @@ class CreateTblOrderDetail extends Migration
             $table->increments('order_detail_id');
             $table->integer('order_id');
             $table->integer('product_id');
+            $table->integer('classify_id');
             $table->integer('order_detail_amount');
             $table->timestamps();
         });

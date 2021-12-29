@@ -6,6 +6,7 @@ use App\Import;
 use App\ImportDetail;
 use App\Product;
 use App\Provider;
+use App\Warehouse;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -60,6 +61,14 @@ class ImportController extends Controller
         $import->import_status=1;
         $import->import_date=date('Y-m-d H:i:s', time());
         $import->save();
+        $import_detail=ImportDetail::where('import_detail_id',$import_id)->get();
+        foreach ($import_detail as $key => $value){
+            $warehouse=Warehouse::where('product_id',$import_detail[$key]->product_id)->first();
+            $warehouse->warehouse_sum_import=$warehouse->warehouse_sum_import+$import_detail[$key]->import_detail_amount;
+            $warehouse->warehouse_sum_inventory=$warehouse->warehouse_sum_inventory+$import_detail[$key]->import_detail_amount;
+            $warehouse->save();
+
+        }
         return redirect('/all-import');
     }
     public function delete_import($import_id){

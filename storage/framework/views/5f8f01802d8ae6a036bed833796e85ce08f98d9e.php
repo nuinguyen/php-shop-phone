@@ -52,6 +52,7 @@
                         <th>So luong Xuat</th>
                         <th>So luong dang ve</th>
                         <th>So luong dang giao</th>
+                        <th>thao tác</th>
 
                     </tr>
                     </thead>
@@ -61,7 +62,13 @@
                             <td><?php echo e($item->product_id); ?></td>
 
                             <td><?php echo e($item->product_name); ?></td>
+                            <td><?php echo e($item->product_name); ?></td>
+                            <td><?php echo e($item->sum_inventory); ?></td>
+                            <td><?php echo e($item->sum_import); ?></td>
+                            <td><?php echo e($item->sum_export); ?></td>
 
+                            <td><?php echo e(isset($import[$item->product_id])?$import[$item->product_id]:0); ?></td>
+                            <td><?php echo e(isset($export[$item->product_id])?$export[$item->product_id]:0); ?></td>
                             <td>
 
                                     <i class="fa fa-pencil-square-o text-success text-active"></i></a>

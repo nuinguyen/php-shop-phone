@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Banner;
 use App\District;
+use App\News;
 use App\Order;
 use App\OrderDetail;
 use App\Classify;
@@ -153,8 +154,10 @@ class UserController extends Controller
         $category=Category::orderby('category_id','asc')->get();
         //BANNER
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
+        ///NEWS
+        $news=News::where('news_status','1')->orderby('news_id','desc')->get();
 
-        return view('pages.user.show_myorder')->with(compact('category','all_banner'));
+        return view('pages.user.show_myorder')->with(compact('category','all_banner','news'));
     }
     public  function save_profile(Request $request){
 
@@ -212,6 +215,8 @@ class UserController extends Controller
         $address=User::where('id',Auth::user()->id)->first();
         //BANNER
         $all_banner = Banner::orderBy('banner_id','DESC')->get();
+        ///NEWS
+        $news=News::where('news_status','1')->orderby('news_id','desc')->get();
 
         if($address->address){
             list($address_team,$address_village,$address_district,$address_city)=explode("-",$address->address);
@@ -221,7 +226,9 @@ class UserController extends Controller
             $address_district='';
             $address_city='';
         }
-        return view('pages.user.show_profile')->with(compact('category','city','district','village','address_city','address_team','address_district','address_village','all_banner'));
+
+
+        return view('pages.user.show_profile')->with(compact('category','city','district','village','address_city','address_team','address_district','address_village','all_banner','news'));
     }
     public function dang_ky(){
         return view ('pages.user.show_signup');
@@ -241,6 +248,7 @@ class UserController extends Controller
         $user->name=$data['user_name'];
         $user->email=$data['user_email'];
         $user->password=md5($data['user_password']);
+        $user->level=2;
 
         $user->save();
         return redirect('/register-auth')->with('message','Dang Ky Thanh Coong');

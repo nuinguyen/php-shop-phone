@@ -102,4 +102,8 @@
     </div>
 <?php $__env->stopSection(); ?>
 
+
+
+$
+
 <?php echo $__env->make('admin_layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\laravel\xampp\htdocs\shopsupper\resources\views/admin/product/all_product.blade.php ENDPATH**/ ?>

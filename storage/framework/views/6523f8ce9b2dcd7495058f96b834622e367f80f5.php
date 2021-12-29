@@ -20,7 +20,7 @@
 
     <link href="<?php echo e(asset('public/frontend/css/sweetalert.css')); ?>" rel="stylesheet">
 
-<   <script src="js/html5shiv.js"></script>-->
+   <script src="js/html5shiv.js"></script>
 <!--    <script src="js/respond.min.js"></script>-->
     <![endif]-->
     <link rel="shortcut icon" href="images/ico/favicon.ico">
@@ -616,7 +616,7 @@
                         sum += parseInt(itemValue.children('.cart_price').children('.to_price').attr('value')) * parseInt(itemValue.children('.cart_amount').children('#amount').attr('value'));
                     });
                     $('#total').html('Tổng tiền hàng : ' + (sum +'').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + ' VNĐ' );
-                    $('#order').html('<input type="button" value="DAT HANG" name="send_order" class="btn btn-success buy-order-cart">');
+                    $('#order').html('<input type="submit" value="DAT HANG" name="send_order" class="btn btn-success buy-order-cart">');
                 } else {
                     sum = 0;
                     $('#total').html('Tổng tiền hàng : ' + (sum +'').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + ' VNĐ' );

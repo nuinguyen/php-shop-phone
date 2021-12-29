@@ -17,6 +17,8 @@ class CreateTblCartDetail extends Migration
             $table->bigInteger('cart_id');
             $table->integer('cart_detail_amount');
             $table->integer('product_id');
+            $table->integer('classify_id');
+            $table->increments('cart_detail_id');
             $table->timestamps();
         });
     }

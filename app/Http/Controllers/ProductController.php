@@ -173,11 +173,18 @@ class ProductController extends Controller
 
         //CATEGORY
         $category=Category::where('category_status','1')->orderby('category_id','asc')->get();
+
+
         $product=Product::join('tbl_pro_class','tbl_pro_class.product_id','=','tbl_product.product_id')
             ->join('tbl_classify','tbl_pro_class.classify_id','=','tbl_classify.classify_id')
              ->join('tbl_category','tbl_product.category_id','=','tbl_category.category_id')
             ->where('tbl_pro_class.product_id',$product_id)
             ->get();
+
+        $warehouse=Product::where('tbl_product.product_id',$product_id)
+            ->join('tbl_warehouse','tbl_product.product_id','=','tbl_warehouse.product_id')
+            ->groupBy('tbl_warehouse.product_id')->selectRaw('sum(warehouse_sum_inventory) as sum_inventory')
+            ->first();
 //        ->join('tbl_pro_class','tbl_pro_class.product_id','=','tbl_product.product_id')
 //            ->join('tbl_classify','tbl_pro_class.classify_id','=','tbl_classify.classify_id')
         //BANNER
@@ -195,7 +202,7 @@ class ProductController extends Controller
             ->whereNotIn('product_id',[$product_id])->paginate(3);
         $news=News::orderby('news_id',"ASC")->get();
 
-        return view('pages.product.show_details')->with(compact('category','product','related','albums','all_banner','news'));
+        return view('pages.product.show_details')->with(compact('category','product','related','albums','all_banner','news','warehouse'));
     }
 
     public function quickview(Request $request){

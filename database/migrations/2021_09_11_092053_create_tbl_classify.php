@@ -14,7 +14,7 @@ class CreateTblClassify extends Migration
     public function up()
     {
         Schema::create('tbl_classify', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('classify_id');
             $table->string('classify_type');
             $table->string('classify_value');
             $table->timestamps();

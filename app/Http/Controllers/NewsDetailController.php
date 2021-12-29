@@ -57,7 +57,7 @@ class NewsDetailController extends Controller
         $news_detail->news_detail_image = $data['news_detail_image'];
         $news_detail->save();
         Session::put('message','Thêm danh mục bài viết thành công');
-        return redirect('/news_detail');
+        return redirect('/news-detail');
     }
 
 

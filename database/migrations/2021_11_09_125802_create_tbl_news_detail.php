@@ -19,9 +19,9 @@ class CreateTblNewsDetail extends Migration
             $table->string('news_detail_name');
             $table->string('news_detail_slug');
             $table->string('news_detail_image');
-            $table->text('news_summary');
-            $table->text('news_desc');
-            $table->integer('news_status');
+            $table->text('news_detail_summary');
+            $table->text('news_detail_desc');
+            $table->integer('news_detail_status');
             $table->timestamps();
         });
     }

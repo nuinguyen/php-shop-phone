@@ -164,10 +164,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
-                            <span>Ma Giam gia</span>
+                            <span>Bao cáo thống kê</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="<?php echo e(URL::to('/sale')); ?>">Quan ly ma giam gia</a></li>
+                            <li><a href="<?php echo e(URL::to('/report-sell')); ?>">Báo cáo bán hàng</a></li>
+                            <li><a href="<?php echo e(URL::to('/report-import')); ?>">Báo cáo nhập hàng</a></li>
+                            <li><a href="<?php echo e(URL::to('/all-export')); ?>">Báo cáo tài chính</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
